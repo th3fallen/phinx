@@ -608,6 +608,12 @@ class SQLiteAdapterTest extends \PHPUnit_Framework_TestCase
                       'column2' => 3,
                   )
               )
+              ->insert(
+                  array(
+                      'value4',
+                      4,
+                  )
+              )
               ->save();
 
         $rows = $this->adapter->fetchAll('SELECT * FROM table1');
@@ -615,9 +621,11 @@ class SQLiteAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('value1', $rows[0]['column1']);
         $this->assertEquals('value2', $rows[1]['column1']);
         $this->assertEquals('value3', $rows[2]['column1']);
+        $this->assertEquals('value4', $rows[3]['column1']);
         $this->assertEquals(1, $rows[0]['column2']);
         $this->assertEquals(2, $rows[1]['column2']);
         $this->assertEquals(3, $rows[2]['column2']);
+        $this->assertEquals(4, $rows[3]['column2']);
     }
 
     public function testNullWithoutDefaultValue()

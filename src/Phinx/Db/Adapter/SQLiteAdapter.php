@@ -822,7 +822,11 @@ class SQLiteAdapter extends PdoAdapter implements AdapterInterface
         );
 
         $columns = array_keys($row);
-        $sql .= "(". implode(', ', array_map(array($this, 'quoteColumnName'), $columns)) . ")";
+
+
+        if (count(array_filter($columns, 'is_string')) > 0) {
+            $sql .= "(". implode(', ', array_map(array($this, 'quoteColumnName'), $columns)) . ")";
+        }
         $sql .= " VALUES ";
 
         $sql .= "(" . implode(', ', array_map(function ($value) {

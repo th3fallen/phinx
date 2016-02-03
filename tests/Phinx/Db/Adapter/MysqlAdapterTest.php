@@ -973,15 +973,23 @@ class MysqlAdapterTest extends \PHPUnit_Framework_TestCase
             ->addColumn('column2', 'integer')
             ->addColumn('column3', 'string', array('default' => 'test'))
             ->insert($data)
+            ->insert(
+                array(
+                    'value4',
+                    '4'
+                )
+            )
             ->save();
 
         $rows = $this->adapter->fetchAll('SELECT * FROM table1');
         $this->assertEquals('value1', $rows[0]['column1']);
         $this->assertEquals('value2', $rows[1]['column1']);
         $this->assertEquals('value3', $rows[2]['column1']);
+        $this->assertEquals('value4', $rows[3]['column1']);
         $this->assertEquals(1, $rows[0]['column2']);
         $this->assertEquals(2, $rows[1]['column2']);
         $this->assertEquals(3, $rows[2]['column2']);
+        $this->assertEquals(4, $rows[3]['column2']);
         $this->assertEquals('test', $rows[0]['column3']);
         $this->assertEquals('foo', $rows[2]['column3']);
     }
